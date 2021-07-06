@@ -7,6 +7,7 @@ import           Data.ByteString        (ByteString)
 import qualified Data.ByteString        as B
 import qualified Data.ByteString.Lazy   as BL
 import qualified Data.ByteString.Base16 as B16
+import           Data.Either            (fromRight)
 
 -- reference implementation
 import qualified Data.Digest.Pure.MD5 as REF
@@ -134,7 +135,7 @@ rfc2202Vectors = -- (secrect,msg,mac)
     , (rep 80 0xaa, "Test Using Larger Than Block-Size Key and Larger Than One Block-Size Data", x"6f630fad67cda0ee1fb1f562db3aa53e")
     ]
   where
-    x = fst.B16.decode
+    x = fromRight undefined . B16.decode
     rep n c = B.replicate n c
 
 rfc2202Tests :: [TestTree]
